@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
 import SearchBar from '../SearchBar/SearchBar';
 import Categories from '../Categories/Categories';
 import ArticleList from '../ArticlesList/ArticlesList';
@@ -7,9 +8,30 @@ const NewsFeed = () => {
   const [feedState, setFeedState] = useState({
     loadedArticles: [],
     chosenCategory: 'general',
-    page: 0,
+    page: 1,
     searchInput: '',
+    isLoading: false
   });
+
+  const getArticles = useCallback(async (category, query, page) => {
+    const url = `http://localhost:${process.env.SERVER_PORT || 8080}/news/${category}?page=${page}${
+      query ? `?qeury=${query}` : ''} `;
+    try {
+      const response = await axios.get(url);
+      if (!response.status === 200) {
+        console.error(response);
+      }
+      const articles = response.data.articles
+      setArticles([...articles]);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getArticles(feedState.chosenCategory, feedState.query, feedState.page)
+  }, [getArticles])
+
 
   const setArticles = (newArticles) => {
     setFeedState({ loadedArticles: newArticles });

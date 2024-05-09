@@ -18,18 +18,3 @@ const App = () => {
 export default App;
 
 
-
-  // const getArticles = async (category, query, page) => {
-  //   const url = `http://localhost:${process.env.SERVER_PORT || 8080}/news/${category}?page=${page}${
-  //     query ? `?qeury=${query}` : ''} `;
-  //   try {
-  //     const response = axios.get(url);
-  //     if (!response.status === 200) {
-  //       console.error(response);
-  //     }
-  //     const articles = response.data.articles
-  //     setArticles(articles);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
