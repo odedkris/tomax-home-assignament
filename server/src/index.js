@@ -13,10 +13,11 @@ server.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET");
   next();
 });
+
 server.use(newsRouter);
 
 server.use((error, req, res, next) => {
-  console.log(error);
+  // console.log(error);
   const message = error.message;
   const status = error.statusCode || 500;
   res.status(status).json({ message: message });

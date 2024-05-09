@@ -1,22 +1,17 @@
 const newsService = require("../services/newsService");
 
-exports.getArticles = (req, res, next) => {
-  const currentPage = req.query.page || 1;
-  const itemsPerPage = req.query.itemsPerPage || 20;
-  const catergory = req.params.catergory;
-  const search = req.params.search;
+exports.getArticles = async (req, res, next) => {
+  const category = req.params.category;
+  const page = req.query.page || 1;
+  const pageSize = req.query.pageSize || 20;
+  const query = req.query.query || '';
   try {
-    const articles = newsService.getArticles(
-      currentPage,
-      itemsPerPage,
-      catergory,
-      search,
-    );
+    const articles = await newsService.getArticles(category, page, pageSize, query)
     res.status(200).json({
       message: "News fetched",
       articles: articles,
-      totalItams: tickets.length,
     });
+    
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;

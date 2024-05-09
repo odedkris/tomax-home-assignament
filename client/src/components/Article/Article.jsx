@@ -1,9 +1,8 @@
 
 
-const Article = (props) => {
-    const {title} = {props};
+const Article = (title) => {
 
-    retrun (
+    return (
         <div className='article' >
             {title}
         </div>

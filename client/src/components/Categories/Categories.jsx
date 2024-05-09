@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./categories.css";
 
 const categories = [
   "business",
@@ -10,18 +11,19 @@ const categories = [
   "technology",
 ];
 
-const Categories = async (props) => {
+const Categories = (props) => {
   const [chosenCategory, setChosenCategory] = useState("general");
 
   return (
     <div id="categories" className="categories">
-      {props.categories.map((category) => (
+      {categories.map((category) => (
         <button
           id={category}
+          key={category}
           className={`category ${category === chosenCategory ? "chosen" : ""}`}
           onClick={() => {
             setChosenCategory(category);
-            props.changeCategory(category);
+            props.onChangeCategory(category)
           }}
         >
           {category}

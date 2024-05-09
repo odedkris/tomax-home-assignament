@@ -1,0 +1,28 @@
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 1em 0;
+  }
+  
+  .category  {
+    font-size: 0.8rem;
+    border: #B2D6C4;
+    background: #B2D6C4;
+    margin: 0.3rem;
+    border-radius: 90px;
+    width: 6.5rem;
+    height: 1.3rem;
+    padding: 0.1rem;
+    text-align: center;
+  }
+  
+  .category.chosen {
+    background: #adcbbc;
+  }
+  
+  .category:hover {
+    background: #adcbbc;
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    cursor: pointer;
+  } 
