@@ -1,8 +1,8 @@
-const ArticleItem = (title) => {
-
+const ArticleItem = (article) => {
+    console.log(article.article)
     return (
         <div className='article' >
-            {title}
+            <p>{article.article.title}</p>
         </div>
     )
 }

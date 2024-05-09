@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import SearchBar from '../SearchBar/SearchBar';
 import Categories from '../Categories/Categories';
-import ArticleList from '../ArticlesList/ArticlesList';
+import ArticleItem from '../ArticleItem/ArticleItem';
 
 const NewsFeed = () => {
   const [feedState, setFeedState] = useState({
@@ -10,35 +10,35 @@ const NewsFeed = () => {
     chosenCategory: 'general',
     page: 1,
     searchInput: '',
-    isLoading: false
+    isLoading: false,
   });
 
   const getArticles = useCallback(async (category, query, page) => {
-    const url = `http://localhost:${process.env.SERVER_PORT || 8080}/news/${category}?page=${page}${
-      query ? `?qeury=${query}` : ''} `;
+    const url = `http://localhost:${
+      process.env.SERVER_PORT || 8080
+    }/news/${category}?page=${page}${query ? `?qeury=${query}` : ''} `;
     try {
       const response = await axios.get(url);
       if (!response.status === 200) {
         console.error(response);
       }
-      const articles = response.data.articles
+      const articles = response.data.articles;
       setArticles([...articles]);
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [feedState]);
 
   useEffect(() => {
-    getArticles(feedState.chosenCategory, feedState.query, feedState.page)
-  }, [getArticles])
-
+    getArticles(feedState.chosenCategory, feedState.query, feedState.page);
+  }, []);
 
   const setArticles = (newArticles) => {
     setFeedState({ loadedArticles: newArticles });
   };
 
   const setChosenCategory = (category) => {
-    setFeedState({ chosenCategory: category, searchInput: '', page: 0 });
+    setFeedState({ chosenCategory: category, searchInput: '', page: 1 });
   };
 
   const setSearchInput = (input) => {
@@ -64,7 +64,16 @@ const NewsFeed = () => {
         value={feedState.searchInput}
       />
       <Categories onChangeCategory={changeCategory} />
-      <ArticleList articles={feedState.loadedArticles} />
+      <div>
+        {feedState.loadedArticles.length ? 
+        <ul>
+          {feedState.loadedArticles.map(article => {
+           return <li key={article.title}><ArticleItem article={article}/> </li>
+          })}
+        </ul> : 
+        <div> no articles </div>
+        }
+      </div>
     </div>
   );
 };
