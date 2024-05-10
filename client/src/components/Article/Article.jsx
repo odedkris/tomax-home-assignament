@@ -1,10 +1,9 @@
 
-
-const Article = (title) => {
+const Article = (article) => {
 
     return (
         <div className='article' >
-            {title}
+            {article.title}
         </div>
     )
 }

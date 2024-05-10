@@ -1,0 +1,10 @@
+.news-feed {
+    background-color: #0A1414;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 15px;
+    height: 80vh;
+    width: 800px;
+    overflow-y: scroll;
+}
+

@@ -1,0 +1,23 @@
+.item {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    height: 80px;
+    overflow: hidden;
+  }
+
+.item-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 500px;
+}
+
+.item-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 3px;
+  object-fit: cover;
+  background-color: #ddd;
+}
