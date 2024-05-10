@@ -4,7 +4,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import Categories from '../Categories/Categories';
 import ArticleItem from '../ArticleItem/ArticleItem';
 
-const NewsFeed = () => {
+const NewsFeed = (props) => {
   const [feedState, setFeedState] = useState({
     loadedArticles: [],
     chosenCategory: 'general',
@@ -22,12 +22,12 @@ const NewsFeed = () => {
       if (!response.status === 200) {
         console.error(response);
       }
-      const articles = response.data.articles;
+      const articles = response.data;
       setArticles([...articles]);
     } catch (error) {
       console.log(error);
     }
-  }, [feedState]);
+  }, []);
 
   useEffect(() => {
     getArticles(feedState.chosenCategory, feedState.query, feedState.page);
@@ -68,7 +68,7 @@ const NewsFeed = () => {
         {feedState.loadedArticles.length ? 
         <ul>
           {feedState.loadedArticles.map(article => {
-           return <li key={article.title}><ArticleItem article={article}/> </li>
+           return <li key={article.title}><ArticleItem article={article} onChooseArticle={props.onChooseArticle}/> </li>
           })}
         </ul> : 
         <div> no articles </div>

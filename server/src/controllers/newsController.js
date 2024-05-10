@@ -7,10 +7,7 @@ exports.getArticles = async (req, res, next) => {
   const query = req.query.query || '';
   try {
     const articles = await newsService.getArticles(category, page, pageSize, query);
-    res.status(200).json({
-      message: "News fetched",
-      articles: articles,
-    });
+    res.status(200).json(articles);
     
   } catch (error) {
     if (!error.statusCode) {
