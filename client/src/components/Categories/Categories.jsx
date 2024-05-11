@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./categories.css";
 
 const categories = [
@@ -12,7 +11,6 @@ const categories = [
 ];
 
 const Categories = (props) => {
-  const [chosenCategory, setChosenCategory] = useState("general");
 
   return (
     <div id="categories" className="categories">
@@ -20,9 +18,8 @@ const Categories = (props) => {
         <button
           id={category}
           key={category}
-          className={`category ${category === chosenCategory ? "chosen" : ""}`}
+          className='category' 
           onClick={() => {
-            setChosenCategory(category);
             props.onChangeCategory(category)
           }}
         >

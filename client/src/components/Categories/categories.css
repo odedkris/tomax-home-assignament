@@ -1,28 +1,24 @@
 .categories {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin: 0.7rem 0.7rem;
-  }
-  
-  .category  {
-    font-size: 16px;
-    border: none;
-    background: #B2D6C4;
-    margin: 0.3rem;
-    border-radius: 90px;
-    width: 7.813rem;
-    height: 1.3rem;
-    padding: 0.1rem;
-    text-align: center;
-  }
-  
-  .category.chosen {
-    background: #adcbbc;
-  }
-  
-  .category:hover {
-    background: #adcbbc;
-    box-shadow: 0 0 11px rgba(33,33,33,.2);
-    cursor: pointer;
-  } 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0.7rem 0.7rem;
+}
+
+.category {
+  font-size: 16px;
+  border: none;
+  background: #b2d6c4;
+  margin: 0.3rem;
+  border-radius: 90px;
+  width: 7.813rem;
+  height: 1.3rem;
+  padding: 0.1rem;
+  text-align: center;
+}
+
+.category:hover {
+  background: #adcbbc;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  cursor: pointer;
+}

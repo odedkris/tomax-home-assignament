@@ -5,7 +5,7 @@ import defaultImg from '../../article-default-img.png';
 
 
 const Article = (props) => {
-    const { title, publishedAt, author, description, content, urlToImage } = props.article;
+    const { title, publishedAt, author, description, content, urlToImage, url } = props.article;
     return (
         <div className='article-page'>
             <div className='return-btn'>
@@ -32,15 +32,14 @@ const Article = (props) => {
                                 src={urlToImage}
                                 alt={description ? description : ""}
                             />
-                        ) : <img
-                            src={defaultImg}
-                        />}
+                        ) : <img src={defaultImg} />}
                     </div>
                 </div>
 
 
                 <div className="article-content">
-                    <text>{content}</text>
+                    <p>{content}</p>
+                    {url && <a href={url} target="_blank">Go to full article</a>}
                 </div>
             </div>
         </div>

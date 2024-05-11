@@ -2,12 +2,14 @@ import { useState } from 'react';
 import './searchBar.css'
 
 const SearchBar = (props) => {
-  const [inputValue, setInputValue] = useState(props.value);
+  const [inputValue, setInputValue] = useState('');
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-    props.onChangeSearchInput(inputValue);
-    setInputValue('');
+  const submitHandler = () => {
+    console.log(inputValue)
+    if (inputValue !== '') {
+      props.onChangeSearchInput(inputValue);
+      setInputValue('');
+    }
   };
 
   const changeHandler = (event) => {
@@ -17,7 +19,7 @@ const SearchBar = (props) => {
 
   return (
     <div className='searchBar'>
-      <form onSubmit={submitHandler}>
+      <div className='form'>
         <input
           type='text'
           id='header-search'
@@ -26,11 +28,11 @@ const SearchBar = (props) => {
           onChange={changeHandler}
         />
         <button className='serach-btn'
-          type='submit'
+          onClick={submitHandler}
         >
           <i className='fa fa-search' aria-hidden='true'></i>
         </button>
-      </form>
+      </div>
     </div >
   );
 };

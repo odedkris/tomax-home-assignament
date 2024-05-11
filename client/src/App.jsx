@@ -1,18 +1,36 @@
-import { useState, } from 'react';
-import './App.css';
+import { useCallback, useEffect, useState, } from 'react';
+import axios from 'axios'
 import SearchBar from './components/SearchBar/SearchBar';
 import Categories from './components/Categories/Categories';
 import NewsFeed from './components/NewsFeed/NewsFeed';
 import Article from './components/Article/Article';
+import './App.css';
 
 const App = () => {
   const [isChoosedArticle, setChoosedArticle] = useState(false);
   const [chosenArticle, setChosenArticle] = useState(null);
   const [loadedArticles, setLoadedArticles] = useState([]);
-  const [chosenCategory, setChosenCategory] = useState();
+  const [chosenCategory, setChosenCategory] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const [currentPage, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+
+  const scrollHandler = (element) => {
+    if (!isLoading) {
+      const endOfPage = Math.abs(
+        element.currentTarget.scrollHeight -
+          element.currentTarget.scrollTop -
+          element.currentTarget.offsetHeight
+      );
+      if (endOfPage <= 0.5) {
+        if(hasMore) {
+          setIsLoading(true);
+          setPage((prevPage) => prevPage+1)
+        }
+      }
+    }
+  };
 
   const chooseArticleHandler = (article) => {
     setChosenArticle(article);
@@ -25,31 +43,57 @@ const App = () => {
   }
 
   const changeCategoryHandler = (category) => {
-    setChosenCategory(category);
-    setSearchInput('');
-    setPage(1);
+    if (category !== chosenCategory) {
+      setChosenCategory(category);
+      setSearchInput('');
+      setPage(1);
+      setIsLoading(true);
+    }
   };
 
   const changeSearchInputHandler = (input) => {
-    setSearchInput(input);
-    setPage(1);
+    if (input !== searchInput) {
+      setSearchInput(input);
+      setPage(1);
+      setIsLoading(true);
+    }
   };
 
-  const getArticles = async () => {
+  const getArticles = useCallback(async (category, page, query) => {
+    setIsLoading(true);
+    
+    const search = query && query !== '' ? `&q='${query}'` : ''; 
     const url = `http://localhost:${process.env.SERVER_PORT || 8080
-      }/news/general?page=1`;
+      }/news/${category || 'general'}?page=${page}${search}`;
     try {
       const response = await axios.get(url);
+      
       if (!response.status === 200) {
         console.error(response);
       }
-      const articles = response.data;
-      setLoadedArticles(articles)
+
+      const articles = response.data.articles;
+      const totalResults = response.data.totalResults
+      setHasMore((currentPage) => {
+        return currentPage*20 < totalResults 
+      })
+
+      if (page>1) {
+        setLoadedArticles((prevArticles) => [...prevArticles,...articles])
+      } else {
+        setLoadedArticles(articles)
+      }
+      
       setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
-  };
+  });
+
+
+  useEffect(() => {
+    getArticles(chosenCategory,currentPage ,searchInput)
+  }, [chosenCategory, searchInput, currentPage])
 
 
   if (isChoosedArticle) {
@@ -62,7 +106,7 @@ const App = () => {
           value={searchInput}
         />
         <Categories onChangeCategory={changeCategoryHandler} />
-        {chosenCategory && <NewsFeed onChooseArticle={chooseArticleHandler} articles={loadedArticles}
+        {!isLoading && <NewsFeed onChooseArticle={chooseArticleHandler} articles={loadedArticles} onScroll={scrollHandler}
           chosenCategory={chosenCategory} searchInput={searchInput} currentPage={currentPage} isLoading={isLoading}
           setChosenCategory={setChosenCategory}
           setSearchInput={setSearchInput}
@@ -70,7 +114,7 @@ const App = () => {
           setLoadedArticles={setLoadedArticles}
           setIsLoading={setIsLoading}
         />}
-        {!chosenCategory && <div className='message'>Choose category</div>}
+        {!chosenCategory || isLoading && <div className='message'>{isLoading ? 'Loading articles' : 'Choose Category'}</div>}
       </div>
 
     )

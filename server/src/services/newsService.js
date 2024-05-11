@@ -14,8 +14,8 @@ exports.getArticles = async (category, page, pageSize, query) => {
   if (!response.data.status === 'error') {
       throw new Error(response.data.message)
   }
-  const articles = await response.data.articles;
-  return articles;
+  const data = response.data;
+  return data;
 };
 
 
