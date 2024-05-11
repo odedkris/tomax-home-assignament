@@ -1,6 +1,3 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-
 import ArticleItem from '../ArticleItem/ArticleItem';
 import './newsFeed.css'
 
