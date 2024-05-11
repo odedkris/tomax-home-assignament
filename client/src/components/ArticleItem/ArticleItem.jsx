@@ -1,24 +1,37 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+import dateformat from 'dateformat';
+import './articleItem.css'
+import defaultImg from '../../article-default-img.png'
 
 const ArticleItem = (props) => {
   const article = props.article;
-  const chooseArticleHandler = (event) => {
-    event.preventDefault();
-    props.onChooseArticle(event.target);
-  };
+  const articleDescription = article.description && article.description.length > 80 ? 
+  article.description.slice(0, 80) + '...' : article.description
+ 
   return (
-    <div>
-      {article.title}
+    <div className='article-item'
+      key={article.title}
+      onClick={() => props.onChooseArticle(article)}>
+      <div className='item-media'>
+        {article.urlToImage ? (
+          <img
+            title={article.title}
+            src={article.urlToImage}
+            alt={article.description ? article.description : ""}
+          />
+        ) :<img
+        src={defaultImg}
+        />}
+      </div>
+      <div className="item-content">
+        <div className="article-title">{article.title}</div>
+        <time className="article-date">
+          {dateformat(article.publishedAt, 'dd/mm/yy HH:MM TT')}
+        </time>
+        <div className="article-description">
+          {articleDescription}
+        </div>
+      </div>
     </div>
   );
 };
@@ -26,25 +39,25 @@ const ArticleItem = (props) => {
 export default ArticleItem;
 
 
-    // <div
-    //   className='item'
-    //   key={article.title}
-    //   onClick={() => chooseArticleHandler()}
-    // >
-    //   <div className='item-header'>
-    //     <div className='header'>
-    //       <a className='item-title'>{article.title}</a>
-    //       <a className='item-date'>{new Date().toLocaleDateString()}</a>
-    //       <div className='item-description'>{article.description}</div>
-    //     </div>
-    //     <div className='item-img'>
-    //       {article.urlToImage ? (
-    //         <img
-    //           title={article.title}
-    //           src={article.urlToImage}
-    //           alt={article.description ? article.description : ''}
-    //         />
-    //       ) : null}
-    //     </div>
-    //   </div>
-    // </div>
+// <div
+//   className='item'
+//   key={article.title}
+//   onClick={() => chooseArticleHandler()}
+// >
+//   <div className='item-header'>
+//     <div className='header'>
+//       <a className='item-title'>{article.title}</a>
+//       <a className='item-date'>{new Date().toLocaleDateString()}</a>
+//       <div className='item-description'>{article.description}</div>
+//     </div>
+//     <div className='item-img'>
+//       {article.urlToImage ? (
+//         <img
+//           title={article.title}
+//           src={article.urlToImage}
+//           alt={article.description ? article.description : ''}
+//         />
+//       ) : null}
+//     </div>
+//   </div>
+// </div>

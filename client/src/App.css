@@ -8,20 +8,9 @@ body {
   flex-direction: column;
 }
 
-.searchBar {
-  position: relative;
-  display: inline-block;
-}
-
-.searchBar input {
-  padding-right: 40px;
-}
-
-.searchBar > IconButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }

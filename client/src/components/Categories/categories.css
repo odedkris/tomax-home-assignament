@@ -2,16 +2,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin: 1em 0;
+    margin: 0.7rem 0.7rem;
   }
   
   .category  {
-    font-size: 0.8rem;
-    border: #B2D6C4;
+    font-size: 16px;
+    border: none;
     background: #B2D6C4;
     margin: 0.3rem;
     border-radius: 90px;
-    width: 6.5rem;
+    width: 7.813rem;
     height: 1.3rem;
     padding: 0.1rem;
     text-align: center;

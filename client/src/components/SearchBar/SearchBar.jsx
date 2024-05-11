@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
+import './searchBar.css'
 
 const SearchBar = (props) => {
   const [inputValue, setInputValue] = useState(props.value);
@@ -18,6 +17,7 @@ const SearchBar = (props) => {
 
   return (
     <div className='searchBar'>
+      <form onSubmit={submitHandler}>
         <input
           type='text'
           id='header-search'
@@ -25,8 +25,13 @@ const SearchBar = (props) => {
           placeholder='Search articles'
           onChange={changeHandler}
         />
-        <IconButton type='submit'><SearchIcon /></IconButton>
-    </div>
+        <button className='serach-btn'
+          type='submit'
+        >
+          <i className='fa fa-search' aria-hidden='true'></i>
+        </button>
+      </form>
+    </div >
   );
 };
 
